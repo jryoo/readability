@@ -2,7 +2,7 @@ var async    = require('async');
 var textStat = require('text-statistics');
 
 var Diffbot = require('diffbot').Diffbot;
-var diffbot = new Diffbot('ca40d8a8c2fae1bff5c4a2af94a2c611');
+var diffbot = new Diffbot(process.env.DIFFBOT_TOKEN);
 
 var tesseract = require('node-tesseract');
 
