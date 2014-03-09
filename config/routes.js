@@ -1,6 +1,6 @@
 var score = require('../app/readabilityScore/readabilityScore');
 
 module.exports = function (app) {
-    app.post('/score', score.create);
-    app.post('/image', score.image)
+    app.post('/score/url', score.url);
+    app.post('/score/image', score.image);
 };

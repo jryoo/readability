@@ -28,7 +28,7 @@ var getGradeLevel = function(text, callback) {
     callback(undefined, avgGradeLvl);
 }
 
-exports.create = function(req, res) {
+exports.url = function(req, res) {
     var params = req.body;
     var readlevel = null;
 
