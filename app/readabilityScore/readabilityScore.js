@@ -55,7 +55,7 @@ exports.create = function(req, res) {
 };
 
 exports.image = function(req, res) {
-
+    var params = req.body;
     console.log("[POST/score] Params: ");
     console.dir(params);
 
