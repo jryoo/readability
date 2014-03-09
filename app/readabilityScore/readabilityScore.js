@@ -40,6 +40,10 @@ exports.create = function(req, res) {
         return;
     }
 
+    if ((params.link.indexOf("http://") !== -1) || params.link.indexOf("https://")) {
+        params.link = "http://" + params.link;
+    }
+
 
     diffbot.article({uri: params.link}, function(err, response) {
 
