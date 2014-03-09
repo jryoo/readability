@@ -16,6 +16,7 @@
     "boilerpipe": "*",
     "async": "*",
     "diffbot": "*",
-    "node-tesseract": "*"
+    "node-tesseract": "*",
+    "node-uuid": "*"
 	}
 }

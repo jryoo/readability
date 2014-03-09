@@ -6,6 +6,9 @@ var diffbot = new Diffbot('ca40d8a8c2fae1bff5c4a2af94a2c611');
 
 var tesseract = require('node-tesseract');
 
+var fs = require('fs');
+var uuid = require('node-uuid');
+
 exports.create = function(req, res) {
     var params = req.body;
     var readlevel = null;
@@ -56,19 +59,35 @@ exports.create = function(req, res) {
 
 exports.image = function(req, res) {
     var params = req.body;
-    console.log("[POST/score] Params: ");
+    console.log("[POST/image] Params: ");
     console.dir(params);
 
-    tesseract.process('public/test_images/test.png',function(err, text) {
+    if (params.base64 === undefined) {
+        res.send(200, {message: "not enough words"});
+        return;
+    }
+
+    var buf = new Buffer(params.base64, 'base64');
+    var tmpFileName = "/tmp/" + uuid.v1() + ".jpg";
+
+    fs.writeFile(tmpFileName, buf, function(err) {
         if(err) {
-            console.error(err);
+            console.log("[POST/image] (fs) ERROR: " + err);
             res.send(500);
             return;
         } else {
-            console.log(text);
-            res.send(200, {text: text});
-        }
-        res.send(500);
-    });
+            tesseract.process(tmpFileName ,function(err, text) {
+                if(err) {
+                    console.error(err);
+                    res.send(500);
+                    return;
+                } else {
+                    console.log(text);
+                    res.send(200, {text: text});
+                }
+                res.send(500);
+            });
 
+        }
+    });
 }
