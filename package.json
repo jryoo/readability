@@ -1,0 +1,16 @@
+{
+  "name": "readability",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "0.10.26"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "ejs": "~0.8.5",
+    "nodemon": "~1.0.14"
+  }
+}
