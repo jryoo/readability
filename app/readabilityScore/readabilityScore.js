@@ -12,7 +12,7 @@ var uuid = require('node-uuid');
 var getGradeLevel = function(text, callback) {
     var ts = textStat(text);
 
-    if (ts.wordCount() < 20) {
+    if (ts.wordCount() < 0) {
         callback('not enough words');
     }
 
@@ -40,12 +40,16 @@ exports.url = function(req, res) {
         return;
     }
 
-    if ((params.link.indexOf("http://") !== -1) || params.link.indexOf("https://")) {
-        params.link = "http://" + params.link;
-    }
+    // if ((params.link.indexOf("http://") != -1) || params.link.indexOf("https://") != -1) {
+    //     console.log('http:// error');
+    //     console.log('params link: ' + params.link);
+    //     params.link = "http://" + params.link;
+    //     console.log('params link: ' + params.link);
+    // }
 
 
     diffbot.article({uri: params.link}, function(err, response) {
+        console.log('[POST/score] (diffbot) TOKEN: ' + process.env.DIFFBOT_TOKEN);
 
         if (err) {
             console.log("[POST/score] (diffbot) ERROR: " + err);
