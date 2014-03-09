@@ -52,8 +52,15 @@ app.post('/score', function(req, res){
         console.log("[POST/score] boilerpipe.err: " + err);
         console.log("[POST/score] boilerpipe.text: " + text);
         var ts = textStat(text);
-        readlevel = ts.fleschKincaidGradeLevel();
-        res.send(200, {score: readlevel});
+	
+        fkgl = ts.fleschKincaidGradeLevel();
+	gfs = ts.gunningFogScore();
+	cli = ts.colemanLiauIndex();
+	si = ts.smogIndex();	
+	ari = automatedReadabilityIndex();
+
+	avgGradeLvl = (fkgl + gfs + cli + si + ari)/5;
+        res.send(200, {score: avgGradeLvl});
     });
 });
 
