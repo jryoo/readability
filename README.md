@@ -7,3 +7,7 @@ The backend to Helen Weng's Readability repo ios app.
 Standardized Scales to use:
 - DRA
 - Fountas & Pinnell
+
+Hit the POST endpoint
+```bash
+```
