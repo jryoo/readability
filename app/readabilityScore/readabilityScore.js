@@ -49,6 +49,12 @@ exports.create = function(req, res) {
             return;
         }
 
+        if (response === undefined) {
+            console.log("[POST/score] (diffbot) ERROR: " + err);
+            res.send(500);
+            return;
+        }
+
         console.log(response.title);
         console.log(response.text);
         text = response.text;
