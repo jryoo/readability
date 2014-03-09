@@ -56,7 +56,7 @@ exports.create = function(req, res) {
 
 exports.image = function(req, res) {
 
-    tesseract.process('/Users/jryoo/Documents/projects/personal/readability/public/test_images/PHOTO.jpg',function(err, text) {
+    tesseract.process('public/test_images/test.png',function(err, text) {
         if(err) {
             console.error(err);
         } else {

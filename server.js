@@ -5,7 +5,6 @@ var path = require('path');
 var router = require('./config/routes');
 var server = null;
 
-
 // all environments
 app.set('port', process.env.PORT || 3020);
 app.use(express.logger('dev'));
@@ -17,6 +16,7 @@ app.use(express.bodyParser());
 
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('public', path.join(__dirname, 'public'));
 app.set('views', path.join(__dirname, ''));
 app.engine('html', require('ejs').renderFile);
 
