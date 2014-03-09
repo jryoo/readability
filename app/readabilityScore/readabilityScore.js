@@ -1,11 +1,12 @@
 var async    = require('async');
 var textStat = require('text-statistics');
-var read = require('node-readability');
 
 var Diffbot = require('diffbot').Diffbot;
 var diffbot = new Diffbot('ca40d8a8c2fae1bff5c4a2af94a2c611');
 
-exports.create = function(req, res){
+var tesseract = require('node-tesseract');
+
+exports.create = function(req, res) {
     var params = req.body;
     var readlevel = null;
 
@@ -47,3 +48,15 @@ exports.create = function(req, res){
         res.send(200, {score: avgGradeLvl});
     });
 };
+
+exports.image = function(req, res) {
+
+    tesseract.process('/Users/jryoo/Documents/projects/personal/readability/public/test_images/PHOTO.jpg',function(err, text) {
+        if(err) {
+            console.error(err);
+        } else {
+            console.log(text);
+        }
+    });
+
+}

@@ -15,7 +15,7 @@
     "text-statistics": "*",
     "boilerpipe": "*",
     "async": "*",
-    "node-readability": "*",
-    "diffbot": "*"
+    "diffbot": "*",
+    "node-tesseract": "*"
 	}
 }
