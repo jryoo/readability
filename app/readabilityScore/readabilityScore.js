@@ -47,7 +47,7 @@ exports.create = function(req, res) {
         console.log("[POST/score] scores: fkgl:" + fkgl + ", gfs:" + gfs + ", cli:" + cli + ", si:" + si + ", ari:" + ari);
 
         avgGradeLvl = (fkgl + gfs + cli + si + ari)/5;
-s
+
 
 
         res.send(200, {score: avgGradeLvl});
