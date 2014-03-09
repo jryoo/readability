@@ -56,12 +56,19 @@ exports.create = function(req, res) {
 
 exports.image = function(req, res) {
 
+    console.log("[POST/score] Params: ");
+    console.dir(params);
+
     tesseract.process('public/test_images/test.png',function(err, text) {
         if(err) {
             console.error(err);
+            res.send(500);
+            return;
         } else {
             console.log(text);
+            res.send(200, {text: text});
         }
+        res.send(500);
     });
 
 }
