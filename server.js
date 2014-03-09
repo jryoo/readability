@@ -1,6 +1,8 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var textStat = require('text-statistics');
+var Boilerpipe = require('boilerpipe');
 
 var app = express();
 
@@ -31,8 +33,28 @@ app.get('/', function(req, res){
 
 app.post('/score', function(req, res){
     var params = req.body;
-    console.log("")
-    res.send(200, {score: 9});
+    var readlevel = null;
+
+    console.log("[POST/score] Params: ");
+    console.dir(params);
+
+    var boilerpipe = new Boilerpipe({
+        extractor: Boilerpipe.Extractor.Article,
+        url: params.link
+    });
+
+    boilerpipe.getText(function(err, text) {
+        if (err) {
+            console.log("[POST/score] ERROR: (boilerpipe)" + err);
+            res.send(500);
+            return;
+        }
+        console.log("[POST/score] boilerpipe.err: " + err);
+        console.log("[POST/score] boilerpipe.text: " + text);
+        var ts = textStat(text);
+        readlevel = ts.fleschKincaidGradeLevel();
+        res.send(200, {score: readlevel});
+    });
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(){
