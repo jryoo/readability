@@ -9,6 +9,26 @@ var tesseract = require('node-tesseract');
 var fs = require('fs');
 var uuid = require('node-uuid');
 
+var getGradeLevel = function(text) {
+    var ts = textStat(text);
+
+    if (ts.wordCount() < 50) {
+        res.send(200, {message: "not enough words"});
+        return;
+    }
+
+    var fkgl = ts.fleschKincaidGradeLevel();
+    var gfs = ts.gunningFogScore();
+    var cli = ts.colemanLiauIndex();
+    var si = ts.smogIndex();    
+    var ari = ts.automatedReadabilityIndex();
+
+    console.log("[POST/score] scores: fkgl:" + fkgl + ", gfs:" + gfs + ", cli:" + cli + ", si:" + si + ", ari:" + ari);
+
+    avgGradeLvl = (fkgl + gfs + cli + si + ari)/5;
+    return avgGradeLvl;
+}
+
 exports.create = function(req, res) {
     var params = req.body;
     var readlevel = null;
@@ -34,26 +54,7 @@ exports.create = function(req, res) {
         console.log(response.text);
         text = response.text;
 
-        var ts = textStat(text);
-
-        if (ts.wordCount() < 50) {
-            res.send(200, {message: "not enough words"});
-            return;
-        }
-    
-        var fkgl = ts.fleschKincaidGradeLevel();
-        var gfs = ts.gunningFogScore();
-        var cli = ts.colemanLiauIndex();
-        var si = ts.smogIndex();    
-        var ari = ts.automatedReadabilityIndex();
-
-        console.log("[POST/score] scores: fkgl:" + fkgl + ", gfs:" + gfs + ", cli:" + cli + ", si:" + si + ", ari:" + ari);
-
-        avgGradeLvl = (fkgl + gfs + cli + si + ari)/5;
-
-
-
-        res.send(200, {score: avgGradeLvl});
+        res.send(200, {score: getGradeLevel(text)});
     });
 };
 
@@ -83,7 +84,7 @@ exports.image = function(req, res) {
                     return;
                 } else {
                     console.log(text);
-                    res.send(200, {text: text});
+                    res.send(200, {score: getGradeLevel(text)});
                 }
                 res.send(500);
             });
