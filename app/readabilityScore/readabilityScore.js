@@ -9,12 +9,11 @@ var tesseract = require('node-tesseract');
 var fs = require('fs');
 var uuid = require('node-uuid');
 
-var getGradeLevel = function(text) {
+var getGradeLevel = function(text, callback) {
     var ts = textStat(text);
 
-    if (ts.wordCount() < 50) {
-        res.send(200, {message: "not enough words"});
-        return;
+    if (ts.wordCount() < 20) {
+        callback('not enough words');
     }
 
     var fkgl = ts.fleschKincaidGradeLevel();
@@ -26,7 +25,7 @@ var getGradeLevel = function(text) {
     console.log("[POST/score] scores: fkgl:" + fkgl + ", gfs:" + gfs + ", cli:" + cli + ", si:" + si + ", ari:" + ari);
 
     avgGradeLvl = (fkgl + gfs + cli + si + ari)/5;
-    return avgGradeLvl;
+    callback(undefined, avgGradeLvl);
 }
 
 exports.create = function(req, res) {
@@ -54,7 +53,14 @@ exports.create = function(req, res) {
         console.log(response.text);
         text = response.text;
 
-        res.send(200, {score: getGradeLevel(text)});
+        getGradeLevel(text, function(err, score) {
+            if (err) {
+                res.send(200, {message: "not enough words"});
+            } else {
+                res.send(200, {score: score});
+                return;
+            }
+        });
     });
 };
 
@@ -84,9 +90,15 @@ exports.image = function(req, res) {
                     return;
                 } else {
                     console.log(text);
-                    res.send(200, {score: getGradeLevel(text)});
+                    getGradeLevel(text, function(err, score) {
+                        if (err) {
+                            res.send(200, {message: "not enough words"});
+                        } else {
+                            res.send(200, {score: score});
+                            return;
+                        }
+                    });
                 }
-                res.send(500);
             });
 
         }
