@@ -13,6 +13,11 @@ exports.create = function(req, res) {
     console.log("[POST/score] Params: ");
     console.dir(params);
 
+    if (params.link === undefined) {
+        res.send(200, {message: "not enough words"});
+        return;
+    }
+
 
     diffbot.article({uri: params.link}, function(err, response) {
 
