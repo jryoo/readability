@@ -1,15 +1,15 @@
 var express = require('express');
+var app = express();
 var http = require('http');
 var path = require('path');
+var router = require('./config/routes');
 var textStat = require('text-statistics');
 var Boilerpipe = require('boilerpipe');
+var server = null;
 
-var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3020);
-app.set('views', path.join(__dirname, ''));
-app.engine('html', require('ejs').renderFile);
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -18,14 +18,16 @@ app.use(express.bodyParser());
 
 
 app.use(app.router);
-app.configure(function() {
-  app.use(express.static(path.join(__dirname, 'public')));
-});
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, ''));
+app.engine('html', require('ejs').renderFile);
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+router(app);
 
 app.get('/', function(req, res){
     res.send(200, {});
