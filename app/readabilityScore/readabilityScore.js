@@ -14,6 +14,13 @@ exports.create = function(req, res){
 
 
     diffbot.article({uri: params.link}, function(err, response) {
+
+        if (err) {
+            console.log("[POST/score] (diffbot) ERROR: " + err);
+            res.send(500);
+            return;
+        }
+
         console.log(response.title);
         console.log(response.text);
         text = response.text;
