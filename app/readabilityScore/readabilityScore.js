@@ -12,7 +12,7 @@ var uuid = require('node-uuid');
 var getGradeLevel = function(text, callback) {
     var ts = textStat(text);
 
-    if (ts.wordCount() < 0) {
+    if (ts.wordCount() < 30) {
         callback('not enough words');
     }
 

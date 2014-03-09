@@ -19,7 +19,7 @@ http://readabilityscore.herokuapp.com/score/url
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" -d '{"base64": "/9j/4AAQSkZJRgABAQEASABIAAD/4gxYSUNDX1BST0ZJTEUA..."}' "http://readabilityscore.herokuapp.com/score/image"
+curl -X POST -H "Content-Type: application/json" -d '{"link": "http://www.nytimes.com/2014/03/10/world/asia/malaysia-airlines-flight.html?hp"}' "http://readabilityscore.herokuapp.com/score/url"
 ```
 
 - Image
@@ -34,6 +34,6 @@ http://readabilityscore.herokuapp.com/score/image
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" -d '{"link": "http://www.nytimes.com/2014/03/10/world/asia/malaysia-airlines-flight.html?hp"}' "http://readabilityscore.herokuapp.com/score/image"
+curl -X POST -H "Content-Type: application/json" -d '{"base64": "/9j/4AAQSkZJRgABAQEASABIAAD/4gxYSUNDX1BST0ZJTEUA..."}' "http://readabilityscore.herokuapp.com/score/image"
 ```
 
